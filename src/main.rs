@@ -3,6 +3,7 @@ use std::io::{self, Read};
 mod a;
 mod b;
 mod c;
+mod d;
 
 fn main() {
     // Read from stdin
@@ -23,6 +24,8 @@ fn main() {
             b::solve(buffer)
         } else if day_value == "c" {
             c::solve(buffer)
+        } else if day_value == "d" {
+            d::solve(buffer)
         } else {
             eprintln!("Error: --day argument must be 'a' or 'b'");
         }
