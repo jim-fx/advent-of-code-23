@@ -1,7 +1,4 @@
 use fancy_regex::Regex;
-use std::fs::File;
-use std::io::{self, BufRead, BufReader};
-use std::path::Path;
 
 fn parse_num(num: &str) -> u32 {
     match num {
@@ -26,22 +23,17 @@ fn parse_num(num: &str) -> u32 {
         _ => 0,
     }
 }
-pub fn solve() -> io::Result<u32> {
+pub fn solve(input: String) {
     // Your regex pattern
     let regex_pattern = r"(?=(\d|one|two|three|four|five|six|seven|eight|nine))";
     let regex = Regex::new(regex_pattern).expect("Invalid regex pattern");
 
-    // Path to your text file
-    let path = Path::new("./src/a_input.txt");
-    let file = File::open(&path)?;
-
-    let reader = BufReader::new(file);
-
     let mut total = 0;
 
+    let lines = input.split("\n");
+
     // Read the file line by line
-    for line in reader.lines() {
-        let line = line?;
+    for line in lines.into_iter() {
         let mut first_num: u32 = 0;
         let mut last_num: u32 = 0;
         // Iterate over matches in the line
@@ -57,10 +49,8 @@ pub fn solve() -> io::Result<u32> {
                 }
             }
         }
-        println!("{}", line);
-        println!("{} {}", first_num, last_num);
         total += first_num * 10 + last_num;
     }
 
-    Ok(total)
+    println!("{}", total);
 }
