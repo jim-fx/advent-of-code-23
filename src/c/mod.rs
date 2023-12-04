@@ -1,6 +1,7 @@
 use lazy_static::lazy_static;
 use regex::Regex;
 use std::cmp::{max, min};
+use std::collections::HashMap;
 
 lazy_static! {
     static ref SYMBOL_PATTERN: regex::Regex =
@@ -13,7 +14,10 @@ pub fn solve(input: String) {
     let line_count = lines.len();
 
     let mut total = 0;
-    let mut gear_ration = 0;
+    let mut total_gear = 0;
+
+    // line_index|char_index -> vector<partnumbers>
+    let mut gears: HashMap<(usize, usize), Vec<i32>> = HashMap::new();
 
     let mut line_index = 0;
     for line in lines.clone().into_iter() {
@@ -63,20 +67,44 @@ pub fn solve(input: String) {
 
             let sub_lines = lines[start_line_index..end_line_index].to_vec();
 
+            let mut found = false;
+            let mut subline_index = max(line_index, 1) - 1;
             for line in sub_lines {
                 let part = &line[start_index..end_index];
-                if SYMBOL_PATTERN.is_match(part) {
+                if SYMBOL_PATTERN.is_match(part) && !found {
                     total += sum;
-                    break;
+                    found = true;
                 }
-
-                // two part number
-                if sum < 100 && sum > 9 {}
+                if let Some(char_index) = part.find("*") {
+                    let gear_id = (subline_index - 1, start_index + char_index);
+                    // Check if the key exists in the HashMap
+                    if let Some(vec) = gears.get_mut(&gear_id) {
+                        // If it exists, push the value to the Vec
+                        vec.push(sum);
+                    } else {
+                        // If it doesn't exist, create a new entry with a Vec containing the single int
+                        let new_vec = vec![sum];
+                        gears.insert(gear_id, new_vec);
+                    }
+                }
+                subline_index += 1;
             }
         }
 
         line_index += 1;
     }
 
+    let filtered_values: HashMap<_, _> = gears
+        .into_iter()
+        .filter(|(_, vec)| vec.len() == 2)
+        .collect();
+
+    let gear_numbers: Vec<Vec<i32>> = filtered_values.values().cloned().collect();
+
+    for gear in gear_numbers {
+        total_gear += gear[0] * gear[1];
+    }
+
     println!("{}", total);
+    println!("{}", total_gear);
 }
