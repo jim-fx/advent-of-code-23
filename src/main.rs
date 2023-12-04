@@ -19,7 +19,7 @@ fn main() {
         if day_value == "a" {
             a::solve(buffer);
         } else if day_value == "b" {
-            b::solve()
+            b::solve(buffer)
         } else {
             eprintln!("Error: --day argument must be 'a' or 'b'");
         }
