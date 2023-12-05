@@ -38,7 +38,7 @@ fn get_amount_winning(line: &str) -> usize {
     return total;
 }
 
-pub fn solve(input: String) {
+pub fn solve(input: String) -> (u32, u32) {
     let lines: Vec<&str> = input.split('\n').collect();
 
     let mut total = 0;
@@ -57,12 +57,12 @@ pub fn solve(input: String) {
         // Get amount of winning numbers
         let amount = get_amount_winning(line.as_str());
 
-        println!(
-            "index: {} amount: {}, copies_per_line: {}",
-            line_index, amount, copies_per_line[line_index]
-        );
+        // println!(
+        //     "index: {} amount: {}, copies_per_line: {}",
+        //     line_index, amount, copies_per_line[line_index]
+        // );
 
-        let value = calculate_value(amount as u32);
+        let _value = calculate_value(amount as u32);
 
         // println!("value: {}", value);
 
@@ -76,6 +76,5 @@ pub fn solve(input: String) {
     for num in copies_per_line {
         total += num;
     }
-
-    println!("{}", total - 1);
+    return (0, total - 1);
 }

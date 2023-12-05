@@ -23,7 +23,7 @@ fn parse_num(num: &str) -> u32 {
         _ => 0,
     }
 }
-pub fn solve(input: String) {
+pub fn solve(input: String) -> (u32, u32) {
     // Your regex pattern
     let regex_pattern = r"(?=(\d|one|two|three|four|five|six|seven|eight|nine))";
     let regex = Regex::new(regex_pattern).expect("Invalid regex pattern");
@@ -52,5 +52,5 @@ pub fn solve(input: String) {
         total += first_num * 10 + last_num;
     }
 
-    println!("{}", total);
+    return (0, total);
 }

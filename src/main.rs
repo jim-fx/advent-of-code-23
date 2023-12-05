@@ -1,35 +1,44 @@
-use std::io::{self, Read};
+use std::fs::File;
+use std::io::Read;
 
-mod a;
-mod b;
-mod c;
-mod d;
+mod day_01;
+mod day_02;
+mod day_03;
+mod day_04;
+mod day_05;
 
 fn main() {
-    // Read from stdin
-    let mut buffer = String::new();
-    io::stdin()
-        .read_to_string(&mut buffer)
-        .expect("Failed to read from stdin");
+    let mut args: Vec<String> = std::env::args().collect();
+    let first_arg = format!("{:0>2}", args.remove(1));
+    let day_arg = first_arg.as_str();
+    let test_arg = args.iter().find(|&arg| arg == "--test");
 
-    // Extract the command line argument after "--day="
-    let args: Vec<String> = std::env::args().collect();
-    let day_arg = args.iter().find(|&arg| arg.starts_with("--day="));
+    let suffix = if test_arg.is_some() { "_test" } else { "" };
 
-    if let Some(day_arg) = day_arg {
-        let day_value: String = day_arg.chars().skip(6).collect();
-        if day_value == "a" {
-            a::solve(buffer);
-        } else if day_value == "b" {
-            b::solve(buffer)
-        } else if day_value == "c" {
-            c::solve(buffer)
-        } else if day_value == "d" {
-            d::solve(buffer)
-        } else {
-            eprintln!("Error: --day argument must be 'a' or 'b'");
-        }
-    } else {
-        eprintln!("Error: --day argument not found");
-    }
+    let input_file = format!("./inputs/{day_arg}{suffix}.txt");
+
+    println!("{} {}", day_arg, input_file);
+
+    let mut input_buffer = String::new();
+    File::open(input_file)
+        .unwrap()
+        .read_to_string(&mut input_buffer)
+        .unwrap();
+
+    let start_time = std::time::Instant::now();
+
+    let (result_01, result_02) = match day_arg {
+        "01" => day_01::solve(input_buffer),
+        "02" => day_02::solve(input_buffer),
+        "03" => day_03::solve(input_buffer),
+        "04" => day_04::solve(input_buffer),
+        "05" => day_05::solve(input_buffer),
+        _ => day_01::solve(input_buffer),
+    };
+
+    let end_time = std::time::Instant::now();
+
+    println!("Time elapsed: {:?}", end_time - start_time);
+    println!("Part 1: {}", result_01);
+    println!("Part 2: {}", result_02);
 }

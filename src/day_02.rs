@@ -1,6 +1,6 @@
 use regex::Regex;
 
-pub fn solve(input: String) {
+pub fn solve(input: String) -> (u32, u32) {
     let lines = input.split("\n");
 
     //12 red cubes, 13 green cubes, and 14 blue
@@ -10,8 +10,8 @@ pub fn solve(input: String) {
 
     let game_regex = Regex::new(r"(^Game \d+: |,)").expect("Invalid regex pattern");
     let mut index = 1;
-    let mut total = 0;
-    let mut power = 0;
+    let mut total: u32 = 0;
+    let mut power: u32 = 0;
 
     for line in lines.into_iter() {
         if line.len() == 0 {
@@ -22,9 +22,9 @@ pub fn solve(input: String) {
 
         let mut valid = true;
         let mut num = 0;
-        let mut red = 0;
-        let mut green = 0;
-        let mut blue = 0;
+        let mut _red = 0;
+        let mut _green = 0;
+        let mut _blue = 0;
 
         let mut min_red = 1;
         let mut min_green = 1;
@@ -36,36 +36,36 @@ pub fn solve(input: String) {
             }
             match word {
                 "red" => {
-                    red = num;
+                    _red = num;
                     if num > min_red {
                         min_red = num;
                     }
                     num = 0;
                 }
                 "green" => {
-                    green = num;
+                    _green = num;
                     if num > min_green {
                         min_green = num;
                     }
                     num = 0;
                 }
                 "blue" => {
-                    blue = num;
+                    _blue = num;
                     if num > min_blue {
                         min_blue = num;
                     }
                     num = 0;
                 }
                 ";" => {
-                    blue = 0;
-                    red = 0;
-                    green = 0;
-                    if red > max_red || green > max_green || blue > max_blue {
+                    _blue = 0;
+                    _red = 0;
+                    _green = 0;
+                    if _red > max_red || _green > max_green || _blue > max_blue {
                         valid = false;
                     }
                 }
                 _ => {
-                    num = word.parse::<i32>().expect("Failed to parse");
+                    num = word.parse::<u32>().expect("Failed to parse");
                 }
             }
         }
@@ -79,6 +79,5 @@ pub fn solve(input: String) {
         index += 1;
     }
 
-    println!("Total: {}", total);
-    println!("Power: {}", power);
+    return (total, power);
 }
