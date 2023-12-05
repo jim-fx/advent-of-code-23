@@ -39,7 +39,7 @@ fn get_amount_winning(line: &str) -> usize {
 }
 
 pub fn solve(input: String) -> (u32, u32) {
-    let lines: Vec<&str> = input.split('\n').collect();
+    let lines = input.lines().collect::<Vec<&str>>();
 
     let mut total = 0;
 
