@@ -6,6 +6,7 @@ mod day_02;
 mod day_03;
 mod day_04;
 mod day_05;
+mod day_06;
 
 fn main() {
     let mut args: Vec<String> = std::env::args().collect();
@@ -33,6 +34,7 @@ fn main() {
         "03" => day_03::solve(input_buffer),
         "04" => day_04::solve(input_buffer),
         "05" => day_05::solve(input_buffer),
+        "06" => day_06::solve(input_buffer),
         _ => day_01::solve(input_buffer),
     };
 
