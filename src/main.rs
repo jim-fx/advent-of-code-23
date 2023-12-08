@@ -8,6 +8,7 @@ mod day_04;
 mod day_05;
 mod day_06;
 mod day_07;
+mod day_08;
 
 fn main() {
     let mut args: Vec<String> = std::env::args().collect();
@@ -18,8 +19,6 @@ fn main() {
     let suffix = if test_arg.is_some() { "_test" } else { "" };
 
     let input_file = format!("./inputs/{day_arg}{suffix}.txt");
-
-    println!("{} {}", day_arg, input_file);
 
     let mut input_buffer = String::new();
     File::open(input_file)
@@ -37,6 +36,7 @@ fn main() {
         "05" => day_05::solve(input_buffer),
         "06" => day_06::solve(input_buffer),
         "07" => day_07::solve(input_buffer),
+        "08" => day_08::solve(input_buffer),
         _ => day_01::solve(input_buffer),
     };
 

@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 
-fn decode_card(card: [u8; 5]) -> String {
+fn _decode_card(card: [u8; 5]) -> String {
     let mut c = Vec::new();
 
     for i in 0..5 {
