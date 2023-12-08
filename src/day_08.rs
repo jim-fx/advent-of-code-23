@@ -1,14 +1,23 @@
+use num::integer::lcm;
 use std::collections::HashMap;
 
-pub fn solve(input: String) -> (u32, u32) {
+fn lcm_of_vec(numbers: Vec<u64>) -> u64 {
+    if numbers.is_empty() {
+        panic!("Cannot calculate LCM for an empty vector");
+    }
+
+    // Calculate LCM using the fold function and the lcm method from the num crate
+    numbers.into_iter().fold(1, |acc, x| lcm(acc, x))
+}
+pub fn solve(input: String) -> (u64, u64) {
     let mut lines = input.lines().collect::<Vec<&str>>();
 
     let directions = lines.remove(0).chars().collect::<Vec<char>>();
-    let direction_count = directions.len() as u32;
+    let direction_count = directions.len() as u64;
 
     let mut map: HashMap<&str, (&str, &str)> = HashMap::new();
 
-    let mut pos = "AAA";
+    let mut positions: Vec<&str> = Vec::new();
 
     for line in lines.iter() {
         if line.is_empty() {
@@ -23,25 +32,48 @@ pub fn solve(input: String) -> (u32, u32) {
         let l = result.get(2).unwrap();
         let r = result.get(3).unwrap();
 
+        if key.ends_with('A') {
+            positions.push(key);
+        }
+
         map.insert(&key, (l, r));
     }
 
-    let mut index: u32 = 0;
+    let mut index: u64 = 0;
 
     let mut steps = 0;
+    let mut multiples: Vec<u64> = Vec::new();
 
-    while pos != "ZZZ" {
+    while positions.len() > 0 {
         let dir = directions.get(index as usize).unwrap();
 
-        pos = match dir {
-            'L' => map.get(pos).unwrap().0,
-            'R' => map.get(pos).unwrap().1,
-            _ => panic!("Unknown direction"),
-        };
+        positions = positions
+            .into_iter()
+            .map(|p| {
+                if p.is_empty() {
+                    return "000";
+                }
+                let line = map.get(p).unwrap();
+                let new_pos = match dir {
+                    'L' => line.0,
+                    'R' => line.1,
+                    _ => panic!("Unknown direction"),
+                };
+
+                if new_pos.ends_with('Z') {
+                    multiples.push(steps + 1);
+                    return "000";
+                }
+
+                return new_pos;
+            })
+            .filter(|p| p != &"000")
+            .collect();
 
         index = (index + 1) % direction_count;
         steps += 1;
     }
+    let result = lcm_of_vec(multiples);
 
-    return (steps, 0);
+    return (steps as u64, result as u64);
 }

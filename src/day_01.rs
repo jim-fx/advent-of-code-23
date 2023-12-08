@@ -1,6 +1,6 @@
 use fancy_regex::Regex;
 
-fn parse_num(num: &str) -> u32 {
+fn parse_num(num: &str) -> u64 {
     match num {
         "1" => 1,
         "2" => 2,
@@ -23,7 +23,7 @@ fn parse_num(num: &str) -> u32 {
         _ => 0,
     }
 }
-pub fn solve(input: String) -> (u32, u32) {
+pub fn solve(input: String) -> (u64, u64) {
     // Your regex pattern
     let regex_pattern = r"(?=(\d|one|two|three|four|five|six|seven|eight|nine))";
     let regex = Regex::new(regex_pattern).expect("Invalid regex pattern");
@@ -34,8 +34,8 @@ pub fn solve(input: String) -> (u32, u32) {
 
     // Read the file line by line
     for line in lines.into_iter() {
-        let mut first_num: u32 = 0;
-        let mut last_num: u32 = 0;
+        let mut first_num: u64 = 0;
+        let mut last_num: u64 = 0;
         // Iterate over matches in the line
         for mat in regex.captures_iter(&line) {
             let m = mat.expect("err").get(1).unwrap().as_str();

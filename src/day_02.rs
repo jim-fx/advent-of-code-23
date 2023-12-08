@@ -1,6 +1,6 @@
 use regex::Regex;
 
-pub fn solve(input: String) -> (u32, u32) {
+pub fn solve(input: String) -> (u64, u64) {
     let lines = input.split("\n");
 
     //12 red cubes, 13 green cubes, and 14 blue
@@ -10,8 +10,8 @@ pub fn solve(input: String) -> (u32, u32) {
 
     let game_regex = Regex::new(r"(^Game \d+: |,)").expect("Invalid regex pattern");
     let mut index = 1;
-    let mut total: u32 = 0;
-    let mut power: u32 = 0;
+    let mut total: u64 = 0;
+    let mut power: u64 = 0;
 
     for line in lines.into_iter() {
         if line.len() == 0 {
@@ -65,7 +65,7 @@ pub fn solve(input: String) -> (u32, u32) {
                     }
                 }
                 _ => {
-                    num = word.parse::<u32>().expect("Failed to parse");
+                    num = word.parse::<u64>().expect("Failed to parse");
                 }
             }
         }

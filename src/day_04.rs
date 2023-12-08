@@ -6,15 +6,15 @@ lazy_static! {
         Regex::new(r"^Card +\d+: ").expect("Invalid regex pattern");
 }
 
-fn calculate_value(amount: u32) -> u32 {
+fn calculate_value(amount: u64) -> u64 {
     if amount == 0 {
         return 0;
     }
     if amount == 1 {
         return 1;
     }
-    let base: u32 = 2;
-    return base.pow(amount - 1);
+    let base: u64 = 2;
+    return base.pow(amount as u32 - 1);
 }
 
 fn get_amount_winning(line: &str) -> usize {
@@ -38,12 +38,12 @@ fn get_amount_winning(line: &str) -> usize {
     return total;
 }
 
-pub fn solve(input: String) -> (u32, u32) {
+pub fn solve(input: String) -> (u64, u64) {
     let lines = input.lines().collect::<Vec<&str>>();
 
     let mut total = 0;
 
-    let mut copies_per_line: Vec<u32> = lines.iter().map(|_| 1).collect();
+    let mut copies_per_line: Vec<u64> = lines.iter().map(|_| 1).collect();
 
     for line_index in 0..lines.len() {
         let _line = lines[line_index];
@@ -62,7 +62,7 @@ pub fn solve(input: String) -> (u32, u32) {
         //     line_index, amount, copies_per_line[line_index]
         // );
 
-        let _value = calculate_value(amount as u32);
+        let _value = calculate_value(amount as u64);
 
         // println!("value: {}", value);
 

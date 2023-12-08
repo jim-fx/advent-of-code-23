@@ -8,7 +8,7 @@ lazy_static! {
         Regex::new(r"[^0-9.]").expect("Invalid regex pattern");
 }
 
-pub fn solve(input: String) -> (u32, u32) {
+pub fn solve(input: String) -> (u64, u64) {
     let lines: Vec<&str> = input.split("\n").collect();
 
     let line_count = lines.len();
@@ -17,7 +17,7 @@ pub fn solve(input: String) -> (u32, u32) {
     let mut total_gear = 0;
 
     // line_index|char_index -> vector<partnumbers>
-    let mut gears: HashMap<(usize, usize), Vec<u32>> = HashMap::new();
+    let mut gears: HashMap<(usize, usize), Vec<u64>> = HashMap::new();
 
     let mut line_index = 0;
     for line in lines.clone().into_iter() {
@@ -26,7 +26,7 @@ pub fn solve(input: String) -> (u32, u32) {
         }
 
         // here we will store the numbers with the start and end indices
-        let mut numbers: Vec<(usize, usize, u32)> = vec![];
+        let mut numbers: Vec<(usize, usize, u64)> = vec![];
 
         let mut start: usize = 0;
         let mut end: usize = 0;
@@ -45,7 +45,7 @@ pub fn solve(input: String) -> (u32, u32) {
                 sum.push(char);
             // if we reach the end of a number
             } else if end != 0 {
-                numbers.push((start, end, sum.parse::<u32>().unwrap()));
+                numbers.push((start, end, sum.parse::<u64>().unwrap()));
                 sum.clear();
                 start = 0;
                 end = 0;
@@ -53,7 +53,7 @@ pub fn solve(input: String) -> (u32, u32) {
             char_index += 1;
         }
         if start != 0 {
-            numbers.push((start, end, sum.parse::<u32>().unwrap()));
+            numbers.push((start, end, sum.parse::<u64>().unwrap()));
         }
 
         // check if there are any symbols around the numbers
@@ -99,7 +99,7 @@ pub fn solve(input: String) -> (u32, u32) {
         .filter(|(_, vec)| vec.len() == 2)
         .collect();
 
-    let gear_numbers: Vec<Vec<u32>> = filtered_values.values().cloned().collect();
+    let gear_numbers: Vec<Vec<u64>> = filtered_values.values().cloned().collect();
 
     for gear in gear_numbers {
         total_gear += gear[0] * gear[1];

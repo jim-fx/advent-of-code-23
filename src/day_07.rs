@@ -159,18 +159,18 @@ fn parse_card(card: &str) -> u64 {
     return a1 + a2 + a3 + a4 + a5 + a6;
 }
 
-pub fn solve(input: String) -> (u32, u32) {
+pub fn solve(input: String) -> (u64, u64) {
     let mut card_map: HashMap<&str, u64> = HashMap::new();
 
     // parse cards
-    let mut cards: Vec<(u64, u32)> = input
+    let mut cards: Vec<(u64, u64)> = input
         .lines()
         .into_iter()
         .map(|s| {
             let words = s.split_whitespace().collect::<Vec<&str>>();
 
             let card = words.first().unwrap();
-            let bid = words.last().unwrap().parse::<u32>().unwrap();
+            let bid = words.last().unwrap().parse::<u64>().unwrap();
 
             if card_map.contains_key(card) {
                 println!("found in map");
@@ -182,15 +182,15 @@ pub fn solve(input: String) -> (u32, u32) {
 
             return (value, bid);
         })
-        .collect::<Vec<(u64, u32)>>();
+        .collect::<Vec<(u64, u64)>>();
 
     cards.sort_by(|a, b| b.0.cmp(&a.0));
 
-    let mut total_value: u32 = 0;
+    let mut total_value: u64 = 0;
 
     let card_amount = cards.len();
     for card_index in 0..card_amount {
-        let value = (card_amount - card_index) as u32;
+        let value = (card_amount - card_index) as u64;
         let card = cards[card_index];
         total_value += value * card.1;
     }
