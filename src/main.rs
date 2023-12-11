@@ -10,6 +10,21 @@ mod day_06;
 mod day_07;
 mod day_08;
 mod day_09;
+mod day_10;
+mod day_11;
+mod day_12;
+mod day_13;
+mod day_14;
+mod day_15;
+mod day_16;
+mod day_17;
+mod day_18;
+mod day_19;
+mod day_20;
+mod day_21;
+mod day_22;
+mod day_23;
+mod day_24;
 
 fn main() {
     let mut args: Vec<String> = std::env::args().collect();
@@ -39,6 +54,21 @@ fn main() {
         "07" => day_07::solve(input_buffer),
         "08" => day_08::solve(input_buffer),
         "09" => day_09::solve(input_buffer),
+        "10" => day_10::solve(input_buffer),
+        "11" => day_11::solve(input_buffer),
+        "12" => day_12::solve(input_buffer),
+        "13" => day_13::solve(input_buffer),
+        "14" => day_14::solve(input_buffer),
+        "15" => day_15::solve(input_buffer),
+        "16" => day_16::solve(input_buffer),
+        "17" => day_17::solve(input_buffer),
+        "18" => day_18::solve(input_buffer),
+        "19" => day_19::solve(input_buffer),
+        "20" => day_20::solve(input_buffer),
+        "21" => day_21::solve(input_buffer),
+        "22" => day_22::solve(input_buffer),
+        "23" => day_23::solve(input_buffer),
+        "24" => day_24::solve(input_buffer),
         _ => day_01::solve(input_buffer),
     };
 
